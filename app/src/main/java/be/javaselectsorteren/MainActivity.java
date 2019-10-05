@@ -2,52 +2,144 @@ package be.javaselectsorteren;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText inputnummers;
-    EditText outputnummers;
+    EditText inputnumbers;
+    EditText outputnumbers;
+    Button bsort;
+    Button ssort;
+    Button isort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        inputnummers.findViewById(R.id.inputnummers);
-        outputnummers.findViewById(R.id.outputnummers);
+        //invoerveld ids koppelen aan onze code
+        inputnumbers = findViewById(R.id.inputgetallen);
+        outputnumbers = findViewById(R.id.outputgetallen);
+        bsort = findViewById(R.id.bsortBtn);
+        ssort = findViewById(R.id.SelectionSort);
+        isort = findViewById(R.id.Insertionsort);
+        bsort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BubbleSortButtonPressed(view);
+            }
+        });
+        ssort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectSortButtonPressed(view);
+
+            }
+        });
+        isort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertionSortButtonPressed(view);
+            }
+        });
+
 
     }
-    public void sorteerknop(View view){
-        String[] lijstmetnummers = inputnummers.getText().toString().split(",");
-        Integer[]nummers = new Integer[lijstmetnummers.length];
-        for (int i=0;i<lijstmetnummers.length; i++){
-            nummers[i]= Integer.parseInt(lijstmetnummers[i]);// we vervormen hier de string array in een interger array
+
+    // <<------------------------ BUBBLE SORT METHOD --------------------------------------->>
+
+    // als de knop ingedrukt is gaat hij de ingevoede getallen van 1 string naar een integer omzetten en deze opdelen
+    // in verschillende getallen. de code weet wanneer het een nieuw getal is als hij een "," tegen komt.
+    public void BubbleSortButtonPressed(View view) {
+        String[] numberList = inputnumbers.getText().toString().split(",");
+        Integer[] numbers = new Integer[numberList.length];
+
+        for (int i = 0; i < numberList.length; i++) {
+            numbers[i] = Integer.parseInt(numberList[i]); // gaat de strings arrays omzetten naar integers.
+        }
+        // dit zijn de gesorteerde getallen die daarna via setText in het output veld geplaatst worden en via to string dus weet naar een string gaan.
+        bubblesort(numbers, numbers.length);
+        outputnumbers.setText(Arrays.toString(numbers));
+    }
+
+    // hier passen we de bubble sort methode toe
+    // hij start met de eerste 2 getallen en kijkt welke de kleinste is en zet deze op de 0 index en de andere op index 1
+    // vervolgens gaan we naar index 2 en 3 en doet die het zelfde maar nu met index positie 2 en 3.
+    // dit looped tot alle getallen in de juiste vvolgorden staan in dit geval van klein naar groot.
+
+    private void bubblesort(Integer[] numbers, int length) {
+        if (length >= 2) {
+            for (int i = 0; i < length - 1; i++) {
+                if (numbers[i] > numbers[i + 1]) {
+                    //verwissel het huidig getal met een kleiner getal.
+                    Integer temp = numbers[i];
+                    numbers[i] = numbers[i + 1];
+                    numbers[i + 1] = temp;
+
+                }
+
+            }
+
+            bubblesort(numbers, length - 1);
 
         }
-        //de gesorteerde getallen uit de onderstaand sorteer functie
-        selectsortern(nummers, nummers.length);
-        outputnummers.setText(Arrays.toString(nummers));
+    }
 
+    //  <<------------------------ SELECTION SORT METHOD --------------------------------------->>
 
+    public void SelectSortButtonPressed(View view) {
+        String[] numberList = inputnumbers.getText().toString().split(",");
+        Integer[] numbers = new Integer[numberList.length];
+
+        for (int i = 0; i < numberList.length; i++) {
+            numbers[i] = Integer.parseInt(numberList[i]);
         }
-    private void selectsortern(Integer[]nummers, int length){
-        if(length>2){
-            return;
-        }
+
+    selectionsort(numbers, numbers.length);
+        outputnumbers.setText(Arrays.toString(numbers));
+}
+    private void selectionsort(Integer[] numbers, int length){
+
         for (int i = 0; i < length-1; i++){
             int minindex = i;
-            for(int j = i+1; j <length; j++)
-                if (nummers[j] < nummers[minindex])
+            for (int j = i+1; j < length; j++)
+                if (numbers[j] < numbers[minindex])
                     minindex = j;
-            int temp = nummers[minindex];
-            nummers[minindex] = nummers[i];
-            nummers[i] = temp;
+                int temp = numbers[minindex];
+                numbers[minindex] = numbers[i];
+                numbers[i] = temp;
+
         }
+    }
+
+    //<<
+    public void InsertionSortButtonPressed(View view){
+        String[] numberList = inputnumbers.getText().toString().split(",");
+        Integer[] numbers = new Integer[numberList.length];
+        for (int i = 0; i < numberList.length; i++){
+            numbers[i] = Integer.parseInt(numberList[i]);
+        }
+        insertionsort(numbers,numbers.length);
+        outputnumbers.setText(Arrays.toString(numbers));
+
+    }
+    private void insertionsort(Integer[] numbers,int length){
+        for (int i = 1; i < length; i++){
+            int key = numbers[i];
+            int j = i - 1;
+
+            while (j >= 0 && numbers[j] > key) {
+                numbers[j + 1] = numbers[j];
+                j = j - 1;
+            }
+            numbers[j + 1] = key;
+        }
+    }
 
 
     }
-}
