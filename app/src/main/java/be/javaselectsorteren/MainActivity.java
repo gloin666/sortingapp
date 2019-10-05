@@ -117,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //<<
+    //<<---------------------------INSERTION SORT METHOD------------------------------------>>
+
+
+
     public void InsertionSortButtonPressed(View view){
         String[] numberList = inputnumbers.getText().toString().split(",");
         Integer[] numbers = new Integer[numberList.length];
