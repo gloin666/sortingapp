@@ -96,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < length-1; i++){
             int minindex = i;
             for (int j = i+1; j < length; j++)
-                if (numbers[j] < numbers[minindex])
+                if (numbers[j] < numbers[minindex]) {
                     minindex = j;
-                int temp = numbers[minindex];
-                numbers[minindex] = numbers[i];
-                numbers[i] = temp;
+                    int temp = numbers[minindex];
+                    numbers[minindex] = numbers[i];
+                    numbers[i] = temp;
+                }
         }
     }
     //<<---------------------------INSERTION SORT ALGORITHM------------------------------------>>
