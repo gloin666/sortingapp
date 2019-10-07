@@ -65,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
     // hier passen we de bubble sort methode toe
     // hij start met de eerste 2 getallen en kijkt welke de kleinste is en zet deze op de 0 index en de andere op index 1
     // vervolgens gaan we naar index 1 en 2 en doet hij het zelfde maar nu met index positie 1 en 2.
-    // dit looped tot alle getallen in de juiste vvolgorden staan in dit geval van klein naar groot.
+    // dit looped tot alle getallen in de juiste volgorden staan in dit geval van klein naar groot.
+    // bubble gaat paren vergelijken en de grote getallen laten opschuiven naar boven. zoals een lucht bel.
 
     private void bubblesort(Integer[] numbers, int length) {
+        // base case als dit true is stopt de loop als er dus niet meer moet verwisseld worden.
         if (length >= 2) {
             for (int i = 0; i < length - 1; i++) {
                 if (numbers[i] > numbers[i + 1]) {
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
                     numbers[i + 1] = temp;
                 }
             }
+            // elke keer als de loop een getal op de juiste index zet gaat hij de array - 1 index opnieuw uitvoeren door dat deze op de juiste plaats staat.
+            // na het aftrekken van de juiste index roept de functie zichzelf terug op tot de base case juist is.
             bubblesort(numbers, length - 1);
         }
     }
@@ -91,7 +95,13 @@ public class MainActivity extends AppCompatActivity {
         selectionsort(numbers, numbers.length);
         outputnumbers.setText(Arrays.toString(numbers));
 }
-    // in deze methode gaan we
+    // in deze methode gaan we kijken naar de eerste index 0 en gaan we index 1 vergelijken met index 0.
+    // als index 0 groter is voegen we index 1 toe aan de nieuwe lijst als gesorteerd item en O gaat dan naar 1.
+    // indien dit niet zo is daat het algoritme kijken naar het volgende getal tot hij een getal vind dat kleiner is.
+    // we zetten hier elke keer het kleinste getal naar index 0 or de volgende index waar dit getal het kleinste is.
+    //dit looped tot alles op de juiste plaats staat.
+    // kort zoek naar het kleinste getal en verwissel het met het huidige getal
+
     private void selectionsort(Integer[] numbers, int length){
         for (int i = 0; i < length-1; i++){
             int minindex = i;
@@ -117,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
         insertionsort(numbers,numbers.length);
         outputnumbers.setText(Arrays.toString(numbers));
     }
+
+    //in dit algoritme gaan we 1 getal nemen en dit vergelijken met alle getallen aan zijn linker kant.
+    // als het getal kleinder is dan schuift dit op naar de tijdelijk juist gesorteerde lijst.
+    // dus aan de linker kant hebben we een tijdelijke lijst die juist is geordent en aan de rechter kant ongeordent.
+    // diet looped tot alles juist staat.
+
+
     private void insertionsort(Integer[] numbers,int length){
         for (int i = 1; i < length; i++){
             int val = numbers[i];
